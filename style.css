@@ -4,6 +4,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  overflow: hidden; /* 화면 크기 초과 스크롤 방지 */
 }
 
 /* 헤더 스타일 */
@@ -14,28 +15,19 @@ header {
   text-align: center;
 }
 
-/* 내비게이션 메뉴 */
-nav ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-}
-
-nav ul li a {
-  text-decoration: none;
-  color: white;
-}
-
 /* 메인 콘텐츠 스타일 */
 main {
   padding: 1rem;
-  height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: calc(100vh - 120px); /* 헤더, 푸터 공간 제외 */
+  overflow-y: auto; /* 세로 스크롤 허용 */
   position: relative;
+}
+
+/* 이미지 스타일 */
+img {
+  width: 100%; /* 가로 너비를 꽉 채움 */
+  max-height: 80vh; /* 화면 비율에 맞게 표시 */
+  object-fit: contain; /* 비율 유지 */
 }
 
 /* 페이지 스타일 */
@@ -49,11 +41,16 @@ main {
   display: block;
 }
 
-/* 내비게이션 버튼 스타일 */
+/* 내비게이션 버튼 고정 스타일 */
 .nav-buttons {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   padding: 1rem;
+  background: rgba(255, 255, 255, 0.8); /* 반투명 배경 */
+  border-top: 1px solid #ccc;
 }
 
 button {
@@ -63,22 +60,18 @@ button {
 
 /* 반응형 디자인 */
 @media (max-width: 768px) {
-  header {
-    font-size: 1.2rem;
-  }
-
-  nav ul {
-    flex-direction: column;
-    gap: 10px;
+  img {
+    max-height: 60vh;
   }
 }
 
 @media (max-width: 480px) {
-  body {
-    font-size: 14px;
+  img {
+    max-height: 50vh;
   }
 
-  header {
-    padding: 0.5rem;
+  button {
+    font-size: 14px;
+    padding: 8px 16px;
   }
 }
