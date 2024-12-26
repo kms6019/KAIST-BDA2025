@@ -1,37 +1,30 @@
 /* 전체 스타일 */
-body {
-  font-family: 'Arial', sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  overflow: hidden; /* 화면 크기 초과 스크롤 방지 */
-  display: flex;
-  flex-direction: column;
+html, body {
+  margin: 0; padding: 0;
+  width: 100%; height: 100%;
+  overflow: hidden; /* 세로 스크롤을 사용하려면 auto; 로 수정 */
 }
 
 /* 이미지 슬라이드 */
 main {
-  display: flex;
-  transition: transform 0.3s ease-in-out;
-  width: 100%; /* 페이지 개수에 맞게 설정 */
-  height: calc(100vh - 60px); /* footer 제외 */
+  height: calc(100vh - 60px); 
+  overflow: hidden; /* 수평 슬라이드라면 보통 이렇게 */
 }
+
 
 /* 이미지 스타일 */
 .page img {
-  width: auto; /* 이미지 원본 비율 유지 */
-  height: 100%; /* 전체 높이 사용 */
-  object-fit: contain; /* 이미지 비율 유지하며 영역에 맞춤 */
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 
 /* 페이지 스타일 */
 .page {
-  flex: 0 0 100%;
-  height: 100%;
-  display: flex;
+  flex: 0 0 100vw;            /* 화면 한 장당 폭을 100vw */
+  display: flex; 
   align-items: center;
   justify-content: center;
-  flex-direction: column;
   overflow: hidden;
 }
 
@@ -75,13 +68,13 @@ main {
 
 /* 하단 버튼 스타일 (footer) */
 .footer-buttons {
-  position: fixed;
+  position: fixed; 
   bottom: 0;
   width: 100%;
   display: flex;
   justify-content: space-around;
   padding: 10px;
-  background: #007BFF; /* 파란색 배경 */
+  background: #007BFF;
   z-index: 20;
 }
 
