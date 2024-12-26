@@ -14,20 +14,20 @@ body {
 main {
   display: flex;
   transition: transform 0.3s ease-in-out;
-  width: 600%; /* 페이지 개수(6개) × 100% */
-  height: 100vh; /* 전체 높이 사용 */
+  width: 100%; /* 페이지 개수에 맞게 설정 */
+  height: calc(100vh - 60px); /* footer 제외 */
 }
 
 /* 이미지 스타일 */
 .page img {
   width: auto; /* 이미지 원본 비율 유지 */
-  height: calc(100% - 60px); /* 버튼 높이 제외 */
+  height: 100%; /* 전체 높이 사용 */
   object-fit: contain; /* 이미지 비율 유지하며 영역에 맞춤 */
 }
 
 /* 페이지 스타일 */
 .page {
-  flex: 0 0 100%; /* 각 페이지가 화면의 100%를 차지 */
+  flex: 0 0 100%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -74,16 +74,19 @@ main {
   background: rgba(0, 0, 0, 0.7);
 }
 
-/* 하단 버튼 스타일 (페이지 내부 버튼) */
-.page-buttons {
+/* 하단 버튼 스타일 (footer) */
+.footer-buttons {
+  position: fixed;
+  bottom: 0;
   width: 100%;
   display: flex;
   justify-content: space-around;
   padding: 10px;
   background: #007BFF; /* 파란색 배경 */
+  z-index: 20;
 }
 
-.page-buttons button {
+.footer-buttons button {
   padding: 10px 20px;
   font-size: 16px;
   border: none;
@@ -93,20 +96,20 @@ main {
   color: white;
 }
 
-.page-buttons button:hover {
+.footer-buttons button:hover {
   background-color: #0056b3;
 }
 
 /* 반응형 디자인 */
 @media (max-width: 768px) {
   .page img {
-    height: calc(100% - 60px);
+    height: 100%;
   }
 }
 
 @media (max-width: 480px) {
   .page img {
-    height: calc(100% - 60px);
+    height: 100%;
   }
 
   button {
