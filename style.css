@@ -31,17 +31,33 @@ nav ul li a {
 /* 메인 콘텐츠 스타일 */
 main {
   padding: 1rem;
-}
-
-/* 폼 스타일 */
-form {
+  height: 300px;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
-input, button {
-  padding: 10px;
+/* 페이지 스타일 */
+.page {
+  display: none;
+  width: 100%;
+  text-align: center;
+}
+
+.page.active {
+  display: block;
+}
+
+/* 내비게이션 버튼 스타일 */
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+button {
+  padding: 10px 20px;
   font-size: 16px;
 }
 

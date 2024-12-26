@@ -18,30 +18,27 @@
     </nav>
   </header>
 
-  <main>
-    <section id="home">
-      <h2>홈</h2>
-      <p>모바일 친화적인 웹 페이지 예제입니다.</p>
+  <main id="page-container">
+    <section id="page1" class="page active">
+      <h2>페이지 1</h2>
+      <p>첫 번째 페이지입니다.</p>
     </section>
 
-    <section id="about">
-      <h2>소개</h2>
-      <p>이 페이지는 모바일 환경에서 최적화된 디자인을 제공합니다.</p>
+    <section id="page2" class="page">
+      <h2>페이지 2</h2>
+      <p>두 번째 페이지입니다.</p>
     </section>
 
-    <section id="contact">
-      <h2>연락처</h2>
-      <form>
-        <label for="name">이름:</label>
-        <input type="text" id="name" name="name" required />
-
-        <label for="email">이메일:</label>
-        <input type="email" id="email" name="email" required />
-
-        <button type="submit">제출</button>
-      </form>
+    <section id="page3" class="page">
+      <h2>페이지 3</h2>
+      <p>세 번째 페이지입니다.</p>
     </section>
   </main>
+
+  <div class="nav-buttons">
+    <button id="prevBtn">&#9664; 이전</button>
+    <button id="nextBtn">다음 &#9654;</button>
+  </div>
 
   <footer>
     <p>&copy; 2024 모바일 웹 페이지</p>
