@@ -1,0 +1,532 @@
+<html lang="ko" class="trancy-ko">
+  <!--<!
+  [endif]--><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=3.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+
+    <meta property="og:image" content="./imgs/og-image.png" />
+    <meta property="og:title" content="KAIST BDA" />
+    <meta
+      property="og:description"
+      content="디지털금융전문가과정:블록체인과 디지털 자산"
+    />
+    <!-- <link
+      rel="shortcut icon"
+      href="https://img.cakecomms.com/data/favicon/1800/1820_20240617 KAIST AIM 2024 Mobile-01.ico"
+      type="image/x-icon"
+    /> -->
+    <title>KAIST BDA</title>
+    <meta
+      name="description"
+      content="디지털금융전문가과정:블록체인과 디지털 자산"
+    />
+
+    <style type="text/css">
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+
+      body {
+        min-height: 100%;
+      }
+      #layout_inner_wrapper {
+        position: relative;
+        height: 100%;
+        min-height: 100%;
+        z-index: 1;
+      }
+
+      .default_menu_style a {
+        color: #ffffff;
+      }
+      .menu_blink_style {
+        background-color: #5a77af;
+      }
+
+      .menu_blink_style a {
+        color: #ffffff;
+      }
+
+      #main {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        z-index: 10; /*margin: -50px 0px -50px 0px;*/
+      }
+      #footer {
+        width: 100%;
+        position: fixed;
+        z-index: 20;
+        bottom: 0px;
+      }
+      area {
+        cursor: pointer;
+      }
+
+      #swipe_notice {
+        position: absolute;
+        top: 0px;
+        z-index: 10000;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 50%;
+      }
+
+      .swiper-pagination {
+        top: 20px !important;
+        bottom: initial !important;
+      }
+
+      #left_button {
+        background: url("/design/mains/index/left.png") no-repeat 0px 0px;
+        background-size: 32px 32px;
+        position: absolute;
+        left: 5px;
+        top: 50%;
+        margin-top: -15px;
+        width: 32px;
+        height: 32px;
+        z-index: 10;
+        opacity: 0.8;
+      }
+
+      #right_button {
+        background: url("/design/mains/index/right.png") no-repeat 0px 0px;
+        background-size: 32px 32px;
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        margin-top: -15px;
+        width: 32px;
+        height: 32px;
+        z-index: 10;
+        opacity: 0.8;
+      }
+
+      #main {
+        height: 100% !important;
+        position: relative;
+      }
+      .swiper-container_wrapper {
+        width: 0px;
+        height: 91%;
+        display: inline-block;
+        position: absolute;
+        /* top: 20%; */
+        top: 0;
+        left: 50%;
+        -ms-transform: translate(-50%, 0%);
+        transform: translate(-50%, 0%);
+      }
+      .swiper-container {
+        height: 100%;
+        overflow: hidden;
+      }
+      .swiper-wrapper {
+        height: 100%;
+      }
+      .swiper-slide {
+        height: 100%;
+        cursor: pointer;
+        cursor: -webkit-grab;
+      }
+      .img_slide {
+        width: auto;
+        height: 100%;
+      }
+
+      .button_wrapper {
+        position: relative;
+        width: 50%;
+        max-width: 550px;
+        margin: auto;
+      }
+      /*********************** footer ***********************/
+      #main {
+        /*height: calc(100% - 60px);*/
+        height: initial;
+      }
+
+      #menu_notice_wrapper {
+        position: relative;
+        display: none;
+      }
+      #footer #menu_notice {
+        width: 100%;
+        position: absolute;
+        text-align: center;
+        top: -20px;
+      }
+
+      #footer #menu_notice_message {
+        color: #024da1;
+        font-size: 13px;
+        font-weight: normal;
+        z-index: 1000;
+        font-family: Helvetica, sans-serif, 돋움, Dotum !important;
+      }
+
+      #footer_menu_list {
+        /* box-shadow: 0 -4px 2px -2px rgba(0, 0, 0, 0.2); */
+        list-style-type: none;
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
+        background: #5a77af;
+        display: flex;
+      }
+      #footer_menu_list li {
+        margin: 0px;
+        padding: 0px;
+        align-self: stretch;
+      }
+      #footer_menu_list li a {
+        font-size: 16px;
+        font-weight: bold;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        line-height: 100%;
+        box-sizing: content-box;
+        margin: 0px;
+        padding: 0px;
+        text-align: center;
+        border-right: 1px solid #c0c0c0;
+        height: 100%;
+        width: 100%;
+      }
+      #footer_menu_list li a span {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 16px;
+        width: 100%;
+        font-weight: bold;
+        line-height: 100%;
+        display: block;
+        margin-top: 0px;
+        padding: 22px 0px;
+      }
+
+      #footer_menu_list li .two_line span {
+        line-height: 18px;
+        padding: 12px 0px;
+      }
+
+      @media screen and (max-width: 420px) {
+        #main {
+          height: calc(100% - 58px);
+        }
+        #footer_menu_list li a span {
+          padding: 21px 0px;
+        }
+        #footer_menu_list li .two_line span {
+          padding: 11px 0px;
+        }
+      }
+
+      @media screen and (max-width: 350px) {
+        #main {
+          height: calc(100% - 54px);
+        }
+        #footer_menu_list li a span {
+          padding: 19px 0px;
+        }
+        #footer_menu_list li .two_line span {
+          padding: 9px 0px;
+        }
+      }
+
+      @media screen and (max-width: 320px) {
+        #main {
+          height: calc(100% - 50px);
+        }
+        #footer_menu_list li a span {
+          padding: 17px 0px;
+        }
+        #footer_menu_list li .two_line span {
+          padding: 7px 0px;
+        }
+      } /*********************** footer ***********************/
+      /*********************** 레이아웃 요소 ***********************/
+
+      canvas {
+        z-index: 10;
+        pointer-events: none;
+        position: fixed;
+        top: 0;
+        transform: scale(1.1);
+      }
+    </style>
+
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/jquery@1.11.2/dist/jquery.min.js"
+    ></script>
+    <script type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function () {
+        /***************************  레이아웃 ***************************/
+        $(".sns_share_link").on("click", function (e) {
+          executeURLLink();
+
+          e.preventDefault();
+        });
+
+        // $("img[usemap]").rwdImageMaps();
+
+        // if ($("img[usemap]").length > 0) {
+        //   $("img[usemap]").rwdImageMaps();
+        // }
+
+        // 스와이프 안내 팝업 3초후 사라지게 하기
+        var n_sec = 1000 * 2;
+        $("#swipe_notice").delay(n_sec).fadeOut(600);
+
+        function slide_update() {
+          $(".swiper-container_wrapper").width($(".img_slide").width());
+          //mySwiper.update();
+        }
+
+        var mySwiper = new Swiper(".swiper-container", {
+          //Your options here:
+          direction: "horizontal",
+          loop: true,
+          slidesPerView: 1,
+          pagination: {
+            el: ".swiper-pagination",
+            type: "bullets",
+          },
+          autoHeight: true,
+          navigation: {
+            nextEl: "#right_button",
+            prevEl: "#left_button",
+          },
+          initialSlide: 0,
+          autoHeight: false,
+          observer: true,
+          observeParents: true,
+          on: {
+            imagesReady: slide_update,
+            resize: slide_update,
+            slideChangeTransitionEnd: function () {
+              if ($(".swiper-slide").find("audio").length > 0) {
+                $(".swiper-slide")
+                  .find("audio")
+                  .each(function (n) {
+                    this.pause();
+                  });
+              }
+
+              if (
+                $(".swiper-slide").eq(this.activeIndex).find("audio").length ==
+                1
+              ) {
+                $(".swiper-slide")
+                  .eq(this.activeIndex)
+                  .find(".play_btn")
+                  .trigger("click");
+              }
+            },
+          },
+        });
+
+        // 이걸 해줘야 반응형처럼 된다.
+        mySwiper.update();
+
+        $("#main").on("click", ".play_btn", function (e) {
+          console.log("play");
+          var o_audio = $(this).closest(".swiper-slide").find("audio").get(0);
+          o_audio.volume = 0.2;
+          o_audio.currentTime = 0;
+          o_audio.play();
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div style="text-align: initial">
+      <canvas id="canvas"></canvas>
+    </div>
+
+    <div id="layout_inner_wrapper">
+      <div id="header"></div>
+
+      <div id="main">
+        <div class="swiper-container_wrapper" style="width: 407px">
+          <img
+            src="https://card.cakecomms.com/design/mains/index/swipe.png"
+            id="swipe_notice"
+            alt=""
+          />
+          <div
+            class="swiper-container swiper-container-initialized swiper-container-horizontal"
+          >
+            <div
+              class="swiper-wrapper"
+              style="
+                transition-duration: 0ms;
+                transform: translate3d(-2442px, 0px, 0px);
+              "
+            >
+              <div
+                class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-next"
+                data-swiper-slide-index="0"
+                style="width: 407px"
+              >
+                <!-- Any HTML content of the first slide goes here -->
+                <img
+                  src="./imgs/V3-1.jpg"
+                  id="slide7"
+                  class="img_slide slide"
+                  alt=""
+                />
+              </div>
+              <div
+                class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-next"
+                data-swiper-slide-index="0"
+                style="width: 407px"
+              >
+                <!-- Any HTML content of the first slide goes here -->
+                <img
+                  src="./imgs/V3-2.jpg"
+                  id="slide7"
+                  class="img_slide slide"
+                  alt=""
+                />
+              </div>
+              <div
+                class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-next"
+                data-swiper-slide-index="0"
+                style="width: 407px"
+              >
+                <!-- Any HTML content of the first slide goes here -->
+                <img
+                  src="./imgs/V3-3.jpg"
+                  id="slide7"
+                  class="img_slide slide"
+                  alt=""
+                />
+              </div>
+              <div
+                class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-next"
+                data-swiper-slide-index="0"
+                style="width: 407px"
+              >
+                <!-- Any HTML content of the first slide goes here -->
+                <img
+                  src="./imgs/V3-4.jpg"
+                  id="slide7"
+                  class="img_slide slide"
+                  alt=""
+                />
+              </div>
+              <div
+                class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-next"
+                data-swiper-slide-index="0"
+                style="width: 407px"
+              >
+                <!-- Any HTML content of the first slide goes here -->
+                <img
+                  src="./imgs/V3-5.jpg"
+                  id="slide7"
+                  class="img_slide slide"
+                  alt=""
+                />
+              </div>
+              <div
+                class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-next"
+                data-swiper-slide-index="0"
+                style="width: 407px"
+              >
+                <!-- Any HTML content of the first slide goes here -->
+                <img
+                  src="./imgs/V3-6.jpg"
+                  id="slide7"
+                  class="img_slide slide"
+                  alt=""
+                />
+              </div>
+            </div>
+            <div class="swiper-pagination swiper-pagination-bullets">
+              <span class="swiper-pagination-bullet"></span
+              ><span class="swiper-pagination-bullet"></span
+              ><span class="swiper-pagination-bullet"></span
+              ><span class="swiper-pagination-bullet"></span
+              ><span class="swiper-pagination-bullet"></span
+              ><span
+                class="swiper-pagination-bullet swiper-pagination-bullet-active"
+              ></span
+              ><span class="swiper-pagination-bullet"></span>
+            </div>
+            <span
+              class="swiper-notification"
+              aria-live="assertive"
+              aria-atomic="true"
+            ></span>
+          </div>
+        </div>
+      </div>
+
+      <div id="footer">
+        <div id="menu_notice_wrapper">
+          <div id="menu_notice">
+            <span id="menu_notice_message">클릭하세요</span>
+          </div>
+        </div>
+
+        <ul id="footer_menu_list" class="float_clear">
+          <li
+            class="float_left default_menu_style"
+            style="width: 33.333333333333%"
+          >
+            <a href="tel:02-6274-6181" class="one_line"
+              ><span class="">과정문의</span></a
+            >
+          </li>
+          <li
+            class="float_left default_menu_style"
+            style="width: 33.333333333333%"
+          >
+            <a
+              href="https://www.business.kaist.ac.kr/html/executive/sub09/sub02_0905.html"
+              target="_self"
+              class="one_line"
+              ><span class="">홈페이지</span></a
+            >
+          </li>
+          <li
+            class="float_left default_menu_style"
+            style="width: 33.333333333333%"
+          >
+            <a
+              href="https://kcbexe.kaist.ac.kr/"
+              target="_self"
+              class="one_line"
+              ><span class="">온라인 지원</span></a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
