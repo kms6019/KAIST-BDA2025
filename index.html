@@ -1,4 +1,4 @@
-<html lang="ko" class="trancy-ko">
+<html lang="ko" class="trancy-k</script>o">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"/>
@@ -286,105 +286,99 @@
 
     <script type="text/javascript">
       $(document).ready(function () {
-        /***************************  레이아웃 ***************************/
-        $(".sns_share_link").on("click", function (e) {
-          executeURLLink();
-          e.preventDefault();
-        });
+      /***************************  레이아웃 ***************************/
+      $(".sns_share_link").on("click", function (e) {
+        executeURLLink();
+        e.preventDefault();
+      });
 
-        // 스와이프 안내 팝업 3초후 사라지게 하기
-        var n_sec = 1000 * 2;
-        $("#swipe_notice").delay(n_sec).fadeOut(600);
+      // 스와이프 안내 팝업 3초후 사라지게 하기
+      var n_sec = 1000 * 2;
+      $("#swipe_notice").delay(n_sec).fadeOut(600);
 
-        function slide_update() {
-          $(".swiper-container_wrapper").width($(".img_slide").width());
-        }
-
-        var mySwiper = new Swiper(".swiper-container", {
-          direction: "horizontal",
-          loop: true,
-          slidesPerView: 1,
-          pagination: {
-            el: ".swiper-pagination",
-            type: "bullets",
-          },
-          autoHeight: true,
-          navigation: {
-            nextEl: "#right_button",
-            prevEl: "#left_button",
-          },
-          initialSlide: 0,
-          autoHeight: false,
-          observer: true,
-          observeParents: true,
-          on: {
-            imagesReady: slide_update,
-            resize: slide_update,
-            slideChangeTransitionEnd: function () {
-              if ($(".swiper-slide").find("audio").length > 0) {
-                $(".swiper-slide")
-                  .find("audio")
-                  .each(function (n) {
-                    this.pause();
-                  });
-              }
-
-              if (
-                $(".swiper-slide").eq(this.activeIndex).find("audio").length ==
-                1
-              ) {
-                $(".swiper-slide")
-                  .eq(this.activeIndex)
-                  .find(".play_btn")
-                  .trigger("click");
-              }
-            },
-          },
-        });
-
-        // 이걸 해줘야 반응형처럼 된다.
-        mySwiper.update();
-
-        $("#main").on("click", ".play_btn", function (e) {
-          console.log("play");
-          var o_audio = $(this).closest(".swiper-slide").find("audio").get(0);
-          o_audio.volume = 0.2;
-          o_audio.currentTime = 0;
-          o_audio.play();
-        });
-
-        // 핀치 줌 기능 추가
-        var el = document.querySelector('.swiper-container');
-        var scale = 1;
-        var startDistance = 0;
-
-        function getDistance(touches) {
-          var dx = touches[0].clientX - touches[1].clientX;
-          var dy = touches[0].clientY - touches[1].clientY;
-          return Math.sqrt(dx * dx + dy * dy);
-        }
-
-        el.addEventListener('touchstart', function(e) {
-          if (e.touches.length === 2) {
-            startDistance = getDistance(e.touches);
+      var mySwiper = new Swiper(".swiper-container", {
+        direction: "horizontal",
+        loop: true,
+        slidesPerView: 1,
+        pagination: {
+        el: ".swiper-pagination",
+        type: "bullets",
+        },
+        autoHeight: true,
+        navigation: {
+        nextEl: "#right_button",
+        prevEl: "#left_button",
+        },
+        initialSlide: 0,
+        autoHeight: false,
+        observer: true,
+        observeParents: true,
+        on: {
+        slideChangeTransitionEnd: function () {
+          if ($(".swiper-slide").find("audio").length > 0) {
+          $(".swiper-slide")
+            .find("audio")
+            .each(function (n) {
+            this.pause();
+            });
           }
-        });
 
-        el.addEventListener('touchmove', function(e) {
-          if (e.touches.length === 2) {
-            var currentDistance = getDistance(e.touches);
-            scale *= currentDistance / startDistance;
-            startDistance = currentDistance;
-            scale = Math.min(Math.max(.5, scale), 3);
-            el.style.transform = `scale(${scale})`;
+          if (
+          $(".swiper-slide").eq(this.activeIndex).find("audio").length ==
+          1
+          ) {
+          $(".swiper-slide")
+            .eq(this.activeIndex)
+            .find(".play_btn")
+            .trigger("click");
           }
-        });
+        },
+        },
+      });
 
-        // 이미지 업로드 후 핀치줌 활성화
-        $('.img_slide').on('load', function() {
-          el.style.transform = 'scale(1)';
-          scale = 1;
-        });
+      // 이걸 해줘야 반응형처럼 된다.
+      mySwiper.update();
+
+      $("#main").on("click", ".play_btn", function (e) {
+        console.log("play");
+        var o_audio = $(this).closest(".swiper-slide").find("audio").get(0);
+        o_audio.volume = 0.2;
+        o_audio.currentTime = 0;
+        o_audio.play();
+      });
+
+      // 핀치 줌 기능 추가
+      var el = document.querySelector('.swiper-container');
+      var scale = 1;
+      var startDistance = 0;
+
+      function getDistance(touches) {
+        var dx = touches[0].clientX - touches[1].clientX;
+        var dy = touches[0].clientY - touches[1].clientY;
+        return Math.sqrt(dx * dx + dy * dy);
+      }
+
+      el.addEventListener('touchstart', function(e) {
+        if (e.touches.length === 2) {
+        startDistance = getDistance(e.touches);
+        }
+      });
+
+      el.addEventListener('touchmove', function(e) {
+        if (e.touches.length === 2) {
+        var currentDistance = getDistance(e.touches);
+        scale *= currentDistance / startDistance;
+        startDistance = currentDistance;
+        scale = Math.min(Math.max(.5, scale), 3);
+        el.style.transform = `scale(${scale})`;
+        }
+      });
+
+      // 이미지 업로드 후 핀치줌 활성화
+      $('.img_slide').on('load', function() {
+        el.style.transform = 'scale(1)';
+        scale = 1;
+      });
       });
     </script>
   </head>
