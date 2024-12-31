@@ -288,8 +288,8 @@
       $(document).ready(function () {
       /***************************  레이아웃 ***************************/
       $(".sns_share_link").on("click", function (e) {
-        executeURLLink();
-        e.preventDefault();
+      executeURLLink();
+      e.preventDefault();
       });
 
       // 스와이프 안내 팝업 3초후 사라지게 하기
@@ -297,54 +297,54 @@
       $("#swipe_notice").delay(n_sec).fadeOut(600);
 
       var mySwiper = new Swiper(".swiper-container", {
-        direction: "horizontal",
-        loop: true,
-        slidesPerView: 1,
-        pagination: {
-        el: ".swiper-pagination",
-        type: "bullets",
-        },
-        autoHeight: true,
-        navigation: {
-        nextEl: "#right_button",
-        prevEl: "#left_button",
-        },
-        initialSlide: 0,
-        autoHeight: false,
-        observer: true,
-        observeParents: true,
-        on: {
-        slideChangeTransitionEnd: function () {
-          if ($(".swiper-slide").find("audio").length > 0) {
-          $(".swiper-slide")
-            .find("audio")
-            .each(function (n) {
-            this.pause();
-            });
-          }
+      direction: "horizontal",
+      loop: true,
+      slidesPerView: 1,
+      pagination: {
+      el: ".swiper-pagination",
+      type: "bullets",
+      },
+      autoHeight: true,
+      navigation: {
+      nextEl: "#right_button",
+      prevEl: "#left_button",
+      },
+      initialSlide: 0,
+      autoHeight: false,
+      observer: true,
+      observeParents: true,
+      on: {
+      slideChangeTransitionEnd: function () {
+        if ($(".swiper-slide").find("audio").length > 0) {
+        $(".swiper-slide")
+        .find("audio")
+        .each(function (n) {
+        this.pause();
+        });
+        }
 
-          if (
-          $(".swiper-slide").eq(this.activeIndex).find("audio").length ==
-          1
-          ) {
-          $(".swiper-slide")
-            .eq(this.activeIndex)
-            .find(".play_btn")
-            .trigger("click");
-          }
-        },
-        },
+        if (
+        $(".swiper-slide").eq(this.activeIndex).find("audio").length ==
+        1
+        ) {
+        $(".swiper-slide")
+        .eq(this.activeIndex)
+        .find(".play_btn")
+        .trigger("click");
+        }
+      },
+      },
       });
 
       // 이걸 해줘야 반응형처럼 된다.
       mySwiper.update();
 
       $("#main").on("click", ".play_btn", function (e) {
-        console.log("play");
-        var o_audio = $(this).closest(".swiper-slide").find("audio").get(0);
-        o_audio.volume = 0.2;
-        o_audio.currentTime = 0;
-        o_audio.play();
+      console.log("play");
+      var o_audio = $(this).closest(".swiper-slide").find("audio").get(0);
+      o_audio.volume = 0.2;
+      o_audio.currentTime = 0;
+      o_audio.play();
       });
 
       // 핀치 줌 기능 추가
@@ -353,31 +353,31 @@
       var startDistance = 0;
 
       function getDistance(touches) {
-        var dx = touches[0].clientX - touches[1].clientX;
-        var dy = touches[0].clientY - touches[1].clientY;
-        return Math.sqrt(dx * dx + dy * dy);
+      var dx = touches[0].clientX - touches[1].clientX;
+      var dy = touches[0].clientY - touches[1].clientY;
+      return Math.sqrt(dx * dx + dy * dy);
       }
 
       el.addEventListener('touchstart', function(e) {
-        if (e.touches.length === 2) {
-        startDistance = getDistance(e.touches);
-        }
+      if (e.touches.length === 2) {
+      startDistance = getDistance(e.touches);
+      }
       });
 
       el.addEventListener('touchmove', function(e) {
-        if (e.touches.length === 2) {
-        var currentDistance = getDistance(e.touches);
-        scale *= currentDistance / startDistance;
-        startDistance = currentDistance;
-        scale = Math.min(Math.max(.5, scale), 3);
-        el.style.transform = `scale(${scale})`;
-        }
+      if (e.touches.length === 2) {
+      var currentDistance = getDistance(e.touches);
+      scale *= currentDistance / startDistance;
+      startDistance = currentDistance;
+      scale = Math.min(Math.max(1, scale), 3); // 최소 스케일을 1로 설정
+      el.style.transform = `scale(${scale})`;
+      }
       });
 
       // 이미지 업로드 후 핀치줌 활성화
       $('.img_slide').on('load', function() {
-        el.style.transform = 'scale(1)';
-        scale = 1;
+      el.style.transform = 'scale(1)';
+      scale = 1;
       });
       });
     </script>
