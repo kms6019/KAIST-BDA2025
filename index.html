@@ -1,6 +1,5 @@
 <html lang="ko" class="trancy-ko">
-  <!--<!
-  [endif]--><head>
+  <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"/>
     <meta http-equiv="cache-control" content="no-cache" />
@@ -20,11 +19,6 @@
       property="og:description"
       content="디지털금융전문가과정:블록체인과 디지털 자산"
     />
-    <!-- <link
-      rel="shortcut icon"
-      href="https://img.cakecomms.com/data/favicon/1800/1820_20240617 KAIST AIM 2024 Mobile-01.ico"
-      type="image/x-icon"
-    /> -->
     <title>KAIST BDA</title>
     <meta
       name="description"
@@ -288,103 +282,109 @@
       type="text/javascript"
       src="https://cdn.jsdelivr.net/npm/jquery@1.11.2/dist/jquery.min.js"
     ></script>
-    <script type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script type="text/javascript">
       $(document).ready(function () {
-      /***************************  레이아웃 ***************************/
-      $(".sns_share_link").on("click", function (e) {
-      executeURLLink();
-
-      e.preventDefault();
-      });
-
-      // 스와이프 안내 팝업 3초후 사라지게 하기
-      var n_sec = 1000 * 2;
-      $("#swipe_notice").delay(n_sec).fadeOut(600);
-
-      function slide_update() {
-      $(".swiper-container_wrapper").width($(".img_slide").width());
-      }
-
-      var mySwiper = new Swiper(".swiper-container", {
-      direction: "horizontal",
-      loop: true,
-      slidesPerView: 1,
-      pagination: {
-      el: ".swiper-pagination",
-      type: "bullets",
-      },
-      autoHeight: true,
-      navigation: {
-      nextEl: "#right_button",
-      prevEl: "#left_button",
-      },
-      initialSlide: 0,
-      autoHeight: false,
-      observer: true,
-      observeParents: true,
-      on: {
-      imagesReady: slide_update,
-      resize: slide_update,
-      slideChangeTransitionEnd: function () {
-        if ($(".swiper-slide").find("audio").length > 0) {
-        $(".swiper-slide")
-        .find("audio")
-        .each(function (n) {
-        this.pause();
+        /***************************  레이아웃 ***************************/
+        $(".sns_share_link").on("click", function (e) {
+          executeURLLink();
+          e.preventDefault();
         });
+
+        // 스와이프 안내 팝업 3초후 사라지게 하기
+        var n_sec = 1000 * 2;
+        $("#swipe_notice").delay(n_sec).fadeOut(600);
+
+        function slide_update() {
+          $(".swiper-container_wrapper").width($(".img_slide").width());
         }
 
-        if (
-        $(".swiper-slide").eq(this.activeIndex).find("audio").length ==
-        1
-        ) {
-        $(".swiper-slide")
-        .eq(this.activeIndex)
-        .find(".play_btn")
-        .trigger("click");
+        var mySwiper = new Swiper(".swiper-container", {
+          direction: "horizontal",
+          loop: true,
+          slidesPerView: 1,
+          pagination: {
+            el: ".swiper-pagination",
+            type: "bullets",
+          },
+          autoHeight: true,
+          navigation: {
+            nextEl: "#right_button",
+            prevEl: "#left_button",
+          },
+          initialSlide: 0,
+          autoHeight: false,
+          observer: true,
+          observeParents: true,
+          on: {
+            imagesReady: slide_update,
+            resize: slide_update,
+            slideChangeTransitionEnd: function () {
+              if ($(".swiper-slide").find("audio").length > 0) {
+                $(".swiper-slide")
+                  .find("audio")
+                  .each(function (n) {
+                    this.pause();
+                  });
+              }
+
+              if (
+                $(".swiper-slide").eq(this.activeIndex).find("audio").length ==
+                1
+              ) {
+                $(".swiper-slide")
+                  .eq(this.activeIndex)
+                  .find(".play_btn")
+                  .trigger("click");
+              }
+            },
+          },
+        });
+
+        // 이걸 해줘야 반응형처럼 된다.
+        mySwiper.update();
+
+        $("#main").on("click", ".play_btn", function (e) {
+          console.log("play");
+          var o_audio = $(this).closest(".swiper-slide").find("audio").get(0);
+          o_audio.volume = 0.2;
+          o_audio.currentTime = 0;
+          o_audio.play();
+        });
+
+        // 핀치 줌 기능 추가
+        var el = document.querySelector('.swiper-container');
+        var scale = 1;
+        var startDistance = 0;
+
+        function getDistance(touches) {
+          var dx = touches[0].clientX - touches[1].clientX;
+          var dy = touches[0].clientY - touches[1].clientY;
+          return Math.sqrt(dx * dx + dy * dy);
         }
-      },
-      },
-      });
 
-      // 이걸 해줘야 반응형처럼 된다.
-      mySwiper.update();
+        el.addEventListener('touchstart', function(e) {
+          if (e.touches.length === 2) {
+            startDistance = getDistance(e.touches);
+          }
+        });
 
-      $("#main").on("click", ".play_btn", function (e) {
-      console.log("play");
-      var o_audio = $(this).closest(".swiper-slide").find("audio").get(0);
-      o_audio.volume = 0.2;
-      o_audio.currentTime = 0;
-      o_audio.play();
-      });
+        el.addEventListener('touchmove', function(e) {
+          if (e.touches.length === 2) {
+            var currentDistance = getDistance(e.touches);
+            scale *= currentDistance / startDistance;
+            startDistance = currentDistance;
+            scale = Math.min(Math.max(.5, scale), 3);
+            el.style.transform = `scale(${scale})`;
+          }
+        });
 
-      // 핀치 줌 기능 추가
-      var scale = 1;
-      var el = document.querySelector('.swiper-container');
-
-      el.addEventListener('wheel', function(e) {
-      if (e.deltaY > 0) {
-      scale += 0.1;
-      } else {
-      scale -= 0.1;
-      }
-      scale = Math.min(Math.max(.125, scale), 4);
-      el.style.transform = `scale(${scale})`;
-      });
-
-      el.addEventListener('gesturechange', function(e) {
-      scale = e.scale;
-      el.style.transform = `scale(${scale})`;
-      });
-
-      // 이미지 업로드 후 핀치줌 활성화
-      $('.img_slide').on('load', function() {
-      el.style.transform = 'scale(1)';
-      scale = 1;
-      });
+        // 이미지 업로드 후 핀치줌 활성화
+        $('.img_slide').on('load', function() {
+          el.style.transform = 'scale(1)';
+          scale = 1;
+        });
       });
     </script>
   </head>
