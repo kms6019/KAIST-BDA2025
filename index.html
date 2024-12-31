@@ -2,10 +2,7 @@
   <!--<!
   [endif]--><head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=3.0, minimum-scale=1.0, user-scalable=yes"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"/>
     <meta http-equiv="cache-control" content="no-cache" />
     <meta http-equiv="pragma" content="no-cache" />
     <meta http-equiv="expires" content="0" />
@@ -42,6 +39,8 @@
         margin: 0;
         padding: 0;
         text-align: center;
+        overflow: auto;
+        touch-action: manipulation; /* 터치 확대/축소 허용 */
       }
 
       body {
@@ -269,7 +268,7 @@
 
       canvas {
         z-index: 10;
-        pointer-events: none;
+        pointer-events: auto;
         position: fixed;
         top: 0;
         transform: scale(1.1);
