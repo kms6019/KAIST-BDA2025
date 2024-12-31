@@ -45,6 +45,7 @@
 
       body {
         min-height: 100%;
+        touch-action: manipulation; /* 터치 확대/축소 허용 */
       }
       #layout_inner_wrapper {
         position: relative;
@@ -266,12 +267,20 @@
       } /*********************** footer ***********************/
       /*********************** 레이아웃 요소 ***********************/
 
-      canvas {
+      /* canvas {
         z-index: 10;
         pointer-events: auto;
         position: fixed;
         top: 0;
         transform: scale(1.1);
+      } */
+      
+      canvas {
+        z-index: 10;
+        pointer-events: auto;
+        
+        top: 0;
+        transform: auto;
       }
     </style>
 
@@ -284,81 +293,92 @@
 
     <script type="text/javascript">
       $(document).ready(function () {
-        /***************************  레이아웃 ***************************/
-        $(".sns_share_link").on("click", function (e) {
-          executeURLLink();
+      /***************************  레이아웃 ***************************/
+      $(".sns_share_link").on("click", function (e) {
+        executeURLLink();
 
-          e.preventDefault();
-        });
+        e.preventDefault();
+      });
 
-        // $("img[usemap]").rwdImageMaps();
+      // 스와이프 안내 팝업 3초후 사라지게 하기
+      var n_sec = 1000 * 2;
+      $("#swipe_notice").delay(n_sec).fadeOut(600);
 
-        // if ($("img[usemap]").length > 0) {
-        //   $("img[usemap]").rwdImageMaps();
-        // }
+      function slide_update() {
+        $(".swiper-container_wrapper").width($(".img_slide").width());
+      }
 
-        // 스와이프 안내 팝업 3초후 사라지게 하기
-        var n_sec = 1000 * 2;
-        $("#swipe_notice").delay(n_sec).fadeOut(600);
+      var mySwiper = new Swiper(".swiper-container", {
+        direction: "horizontal",
+        loop: true,
+        slidesPerView: 1,
+        pagination: {
+        el: ".swiper-pagination",
+        type: "bullets",
+        },
+        autoHeight: true,
+        navigation: {
+        nextEl: "#right_button",
+        prevEl: "#left_button",
+        },
+        initialSlide: 0,
+        autoHeight: false,
+        observer: true,
+        observeParents: true,
+        on: {
+        imagesReady: slide_update,
+        resize: slide_update,
+        slideChangeTransitionEnd: function () {
+          if ($(".swiper-slide").find("audio").length > 0) {
+          $(".swiper-slide")
+            .find("audio")
+            .each(function (n) {
+            this.pause();
+            });
+          }
 
-        function slide_update() {
-          $(".swiper-container_wrapper").width($(".img_slide").width());
-          //mySwiper.update();
+          if (
+          $(".swiper-slide").eq(this.activeIndex).find("audio").length ==
+          1
+          ) {
+          $(".swiper-slide")
+            .eq(this.activeIndex)
+            .find(".play_btn")
+            .trigger("click");
+          }
+        },
+        },
+      });
+
+      // 이걸 해줘야 반응형처럼 된다.
+      mySwiper.update();
+
+      $("#main").on("click", ".play_btn", function (e) {
+        console.log("play");
+        var o_audio = $(this).closest(".swiper-slide").find("audio").get(0);
+        o_audio.volume = 0.2;
+        o_audio.currentTime = 0;
+        o_audio.play();
+      });
+
+      // 핀치 줌 기능 추가
+      var scale = 1;
+      var el = document.querySelector('.swiper-container');
+
+      el.addEventListener('wheel', function(e) {
+        if (e.deltaY > 0) {
+        scale += 0.1;
+        } else {
+        scale -= 0.1;
         }
+        scale = Math.min(Math.max(.125, scale), 4);
+        el.style.transform = `scale(${scale})`;
+      });
 
-        var mySwiper = new Swiper(".swiper-container", {
-          //Your options here:
-          direction: "horizontal",
-          loop: true,
-          slidesPerView: 1,
-          pagination: {
-            el: ".swiper-pagination",
-            type: "bullets",
-          },
-          autoHeight: true,
-          navigation: {
-            nextEl: "#right_button",
-            prevEl: "#left_button",
-          },
-          initialSlide: 0,
-          autoHeight: false,
-          observer: true,
-          observeParents: true,
-          on: {
-            imagesReady: slide_update,
-            resize: slide_update,
-            slideChangeTransitionEnd: function () {
-              if ($(".swiper-slide").find("audio").length > 0) {
-                $(".swiper-slide")
-                  .find("audio")
-                  .each(function (n) {
-                    this.pause();
-                  });
-              }
-
-              if (
-                $(".swiper-slide").eq(this.activeIndex).find("audio").length ==
-                1
-              ) {
-                $(".swiper-slide")
-                  .eq(this.activeIndex)
-                  .find(".play_btn")
-                  .trigger("click");
-              }
-            },
-          },
-        });
-
-        // 이걸 해줘야 반응형처럼 된다.
-        mySwiper.update();
-
-        $("#main").on("click", ".play_btn", function (e) {
-          console.log("play");
-          var o_audio = $(this).closest(".swiper-slide").find("audio").get(0);
-          o_audio.volume = 0.2;
-          o_audio.currentTime = 0;
-          o_audio.play();
-        });
+      el.addEventListener('gesturechange', function(e) {
+        scale = e.scale;
+        el.style.transform = `scale(${scale})`;
+      });
       });
     </script>
   </head>
